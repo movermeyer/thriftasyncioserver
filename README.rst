@@ -10,8 +10,10 @@ ThriftAsyncIOServer
 
 .. image:: https://pypip.in/download/thriftasyncioserver/badge.png
         :target: https://pypi.python.org/pypi/thriftasyncioserver
-
-
+        
+.. image:: https://pypip.in/format/thriftasyncioserver/badge.png
+        :target: https://pypi.python.org/pypi/thriftasyncioserver
+        
 Thrift Server using the Python 3 asyncio module
 
 * Free software: BSD license
