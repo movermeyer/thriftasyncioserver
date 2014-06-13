@@ -1,2 +1,2 @@
-git+https://git.marketcircle.net/scm/cl/thriftpy.git
+git+https://github.com/Marketcircle/Thrift-Python.git
 wheel==0.23.0
