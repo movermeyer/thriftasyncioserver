@@ -15,15 +15,15 @@ class Protocol(asyncio.Protocol):
         self.protocol_factory = protocol_factory
         self.processor = processor
 
-    def connection_made(self, transport):
-        self.transport = transport
-
     def process_request(self, input_buffer):
         input_protocol = self.protocol_factory.getProtocol(input_buffer)
         out_buffer = TTransport.TMemoryBuffer()
         out_protocol = self.protocol_factory.getProtocol(out_buffer)
         self.processor.process(input_protocol, out_protocol)
         self.transport.write(out_buffer.getvalue())
+
+    def connection_made(self, transport):
+        self.transport = transport
 
     def data_received(self, data):
         """
