@@ -18,8 +18,8 @@ from thrift.transport import TSocket
 from thrift.transport import THttpClient
 from thrift.protocol import TBinaryProtocol
 
-from test_service import TestService
-from test_service.ttypes import *
+from demo_service import DemoService
+from demo_service.ttypes import *
 
 if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print('')
@@ -77,7 +77,7 @@ else:
   else:
     transport = TTransport.TBufferedTransport(socket)
 protocol = TBinaryProtocol.TBinaryProtocol(transport)
-client = TestService.Client(protocol)
+client = DemoService.Client(protocol)
 transport.open()
 
 if cmd == 'ping':

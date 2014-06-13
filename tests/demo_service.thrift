@@ -1,4 +1,4 @@
-service TestService {
+service DemoService {
 	
     void ping(),
     
