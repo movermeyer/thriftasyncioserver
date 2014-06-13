@@ -59,9 +59,9 @@ class Server(object):
         loop = asyncio.get_event_loop()
 
         coro = loop.create_server(self.make_protocol,
-                                  host = self.host,
-                                  port = self.port,
-                                  ssl = self.ssl)
+                                  host=self.host,
+                                  port=self.port,
+                                  ssl=self.ssl)
 
         server = loop.run_until_complete(coro)
         if self.server_ready_event:

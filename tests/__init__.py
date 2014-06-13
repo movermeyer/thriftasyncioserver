@@ -69,7 +69,6 @@ class BasicTests(unittest.TestCase):
     def setUp(self):
         self.handler = mock.MagicMock()
 
-
         self.setup_server()
         self.start_server()
         self.setup_client()
@@ -84,7 +83,6 @@ class BasicTests(unittest.TestCase):
             self.test_port,
             TBinaryProtocol.TBinaryProtocolFactory(),
             DemoService.Processor(self.handler))
-
 
     def setup_client(self):
         socket = TSocket.TSocket(self.test_host, self.test_port)
@@ -112,7 +110,6 @@ class BasicTests(unittest.TestCase):
         self.handler.greet.assert_called_with('hello')
 
 
-
 class SSLTests(BasicTests):
 
     ssl_context = None
@@ -123,11 +120,13 @@ class SSLTests(BasicTests):
         BasicTests.setUp(self)
 
     def setup_ssl_context(self):
-            ssl_cert_dir = os.path.dirname(os.path.abspath(__file__))+'/test_certificates/'
+            ssl_cert_dir = (os.path.dirname(os.path.abspath(__file__)) +
+                            '/test_certificates/')
             ssl_cert_file = ssl_cert_dir + 'server.crt'
             ssl_key_file = ssl_cert_dir + 'server.key'
             self.ssl_context = ssl.SSLContext(self.ssl_protocol)
-            self.ssl_context.load_cert_chain(ssl_cert_file, keyfile=ssl_key_file)
+            self.ssl_context.load_cert_chain(ssl_cert_file,
+                                             keyfile=ssl_key_file)
 
     def setup_server(self):
         self.server = DemoServerWrapper(
@@ -139,7 +138,9 @@ class SSLTests(BasicTests):
             )
 
     def setup_client(self):
-        socket = TSSLSocket.TSSLSocket(host=self.test_host, port=self.test_port, validate=False)
+        socket = TSSLSocket.TSSLSocket(host=self.test_host,
+                                       port=self.test_port,
+                                       validate=False)
         self.client_transport = TTransport.TBufferedTransport(socket)
         protocol = TBinaryProtocol.TBinaryProtocol(self.client_transport)
         self.client = DemoService.Client(protocol)
