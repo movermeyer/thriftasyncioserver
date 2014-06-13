@@ -10,8 +10,8 @@ python:
 install: pip install -r requirements.txt
 
 before_script:
-	- python -c "import tests; print(tests)"
-	- python -c "import tests; print(tests.test_thriftasyncioserver)"
+    - python -c "import tests; print(tests)"
+    - python -c "import tests; print(tests.test_thriftasyncioserver)"
 
 # command to run tests, e.g. python setup.py test
 script: make test
