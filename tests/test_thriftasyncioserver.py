@@ -77,10 +77,8 @@ class BasicTests(unittest.TestCase):
         self.setup_client()
         
     def tearDown(self):
-        
         self.destroy_client()
         self.stop_server()
-
     
     def setup_client(self):
         socket = TSocket.TSocket(self.test_host, self.test_port)

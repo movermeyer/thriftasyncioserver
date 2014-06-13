@@ -42,10 +42,10 @@ class Server(object):
     """
     Thrift Server using the Python asyncio module.
     """
-    
+
     server_ready_event = None
     server_stop_event = None
-    
+
     def __init__(self, host, port, protocol_factory, processor):
         self.host = host
         self.port = port
@@ -59,7 +59,7 @@ class Server(object):
         loop = asyncio.get_event_loop()
 
         coro = loop.create_server(self.make_protocol, self.host, self.port)
-        
+
         server = loop.run_until_complete(coro)
         if self.server_ready_event:
             self.server_ready_event.set()
@@ -69,7 +69,9 @@ class Server(object):
         except KeyboardInterrupt:
             pass
         finally:
+
             server.close()
-            loop.run_until_complete(server.wait_closed())            
+            loop.run_until_complete(server.wait_closed())
             if self.server_stop_event:
                 self.server_stop_event.set()
+
