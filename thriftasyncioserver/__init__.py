@@ -45,11 +45,12 @@ class Server(object):
     server_ready_event = None
     server_stop_event = None
 
-    def __init__(self, host, port, protocol_factory, processor):
+    def __init__(self, host, port, protocol_factory, processor, ssl=None):
         self.host = host
         self.port = port
         self.protocol_factory = protocol_factory
         self.processor = processor
+        self.ssl = ssl
 
     def make_protocol(self):
         return Protocol(self.protocol_factory, self.processor)
@@ -57,7 +58,10 @@ class Server(object):
     def serve(self):
         loop = asyncio.get_event_loop()
 
-        coro = loop.create_server(self.make_protocol, self.host, self.port)
+        coro = loop.create_server(self.make_protocol,
+                                  host = self.host,
+                                  port = self.port,
+                                  ssl = self.ssl)
 
         server = loop.run_until_complete(coro)
         if self.server_ready_event:

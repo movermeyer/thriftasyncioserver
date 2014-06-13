@@ -14,11 +14,13 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__))+'/gen-py')
 import unittest
 from unittest import mock
 import asyncio
+import ssl
 
 from demo_service import DemoService
 from thriftasyncioserver import Server
 from thrift.protocol import TBinaryProtocol
 from thrift.transport import TSocket
+from thrift.transport import TSSLSocket
 from thrift.transport import TTransport
 from threading import Thread, Event
 
@@ -67,18 +69,22 @@ class BasicTests(unittest.TestCase):
     def setUp(self):
         self.handler = mock.MagicMock()
 
-        self.server = DemoServerWrapper(
-            self.test_host,
-            self.test_port,
-            TBinaryProtocol.TBinaryProtocolFactory(),
-            DemoService.Processor(self.handler))
 
+        self.setup_server()
         self.start_server()
         self.setup_client()
 
     def tearDown(self):
         self.destroy_client()
         self.stop_server()
+
+    def setup_server(self):
+        self.server = DemoServerWrapper(
+            self.test_host,
+            self.test_port,
+            TBinaryProtocol.TBinaryProtocolFactory(),
+            DemoService.Processor(self.handler))
+
 
     def setup_client(self):
         socket = TSocket.TSocket(self.test_host, self.test_port)
@@ -104,6 +110,40 @@ class BasicTests(unittest.TestCase):
         self.handler.greet.return_value = 'hello world'
         self.assertEqual(self.client.greet('hello'), 'hello world')
         self.handler.greet.assert_called_with('hello')
+
+
+
+class SSLTests(BasicTests):
+
+    ssl_context = None
+    ssl_protocol = ssl.PROTOCOL_TLSv1
+
+    def setUp(self):
+        self.setup_ssl_context()
+        BasicTests.setUp(self)
+
+    def setup_ssl_context(self):
+            ssl_cert_dir = os.path.dirname(os.path.abspath(__file__))+'/test_certificates/'
+            ssl_cert_file = ssl_cert_dir + 'server.crt'
+            ssl_key_file = ssl_cert_dir + 'server.key'
+            self.ssl_context = ssl.SSLContext(self.ssl_protocol)
+            self.ssl_context.load_cert_chain(ssl_cert_file, keyfile=ssl_key_file)
+
+    def setup_server(self):
+        self.server = DemoServerWrapper(
+            self.test_host,
+            self.test_port,
+            TBinaryProtocol.TBinaryProtocolFactory(),
+            DemoService.Processor(self.handler),
+            ssl=self.ssl_context
+            )
+
+    def setup_client(self):
+        socket = TSSLSocket.TSSLSocket(host=self.test_host, port=self.test_port, validate=False)
+        self.client_transport = TTransport.TBufferedTransport(socket)
+        protocol = TBinaryProtocol.TBinaryProtocol(self.client_transport)
+        self.client = DemoService.Client(protocol)
+        self.client_transport.open()
 
 
 if __name__ == '__main__':
