@@ -7,7 +7,6 @@ __version__ = '0.1.0'
 __all__ = ['Server']
 
 import asyncio
-import threading
 from thrift.transport import TTransport
 
 
@@ -15,7 +14,6 @@ class Protocol(asyncio.Protocol):
     def __init__(self, protocol_factory, processor):
         self.protocol_factory = protocol_factory
         self.processor = processor
-
 
     def connection_made(self, transport):
         self.transport = transport
@@ -37,6 +35,7 @@ class Protocol(asyncio.Protocol):
 
     def connection_lost(self, exc):
         self.transport.close()
+
 
 class Server(object):
     """
@@ -74,4 +73,3 @@ class Server(object):
             loop.run_until_complete(server.wait_closed())
             if self.server_stop_event:
                 self.server_stop_event.set()
-
