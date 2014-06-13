@@ -30,7 +30,7 @@ setup(
     author='Thomas Bartelmess',
     author_email='tbartelmess@marketcircle.com',
     url='https://github.com/Marketcircle/thriftasyncioserver',
-    dependency_links= ['git+https://git.marketcircle.net/scm/cl/thriftpy.git']
+    dependency_links= ['git+https://git.marketcircle.net/scm/cl/thriftpy.git'],
     packages=[
         'thriftasyncioserver',
     ],
