@@ -15,7 +15,7 @@ class Protocol(asyncio.Protocol):
     def __init__(self, protocol_factory, processor):
         self.protocol_factory = protocol_factory
         self.processor = processor
-        self.input_buffer = TTransport.TMemoryBuffer
+
 
     def connection_made(self, transport):
         self.transport = transport
