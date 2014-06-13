@@ -54,6 +54,7 @@ class TestServerWrapper(object):
     def stop(self):
         self.loop.stop()
         self.server_stop_event.wait()
+        self.loop.close()
     
 
 class BasicTests(unittest.TestCase):
