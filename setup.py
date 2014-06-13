@@ -24,7 +24,7 @@ test_requirements = [
 
 setup(
     name='thriftasyncioserver',
-    version='0.1.0',
+    version='0.1.1',
     description='Thrift Server using the Python 3 asyncio module',
     long_description=readme + '\n\n' + history,
     author='Thomas Bartelmess',

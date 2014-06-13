@@ -7,3 +7,8 @@ History
 ---------------------
 
 * First release on PyPI.
+
+ 0.1.1 (2014-06-12)
+---------------------
+
+* Minor fixes
