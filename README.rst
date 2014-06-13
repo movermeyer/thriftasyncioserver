@@ -8,7 +8,7 @@ ThriftAsyncIOServer
 .. image:: https://travis-ci.org/Marketcircle/thriftasyncioserver.png?branch=master
         :target: https://travis-ci.org/Marketcircle/thriftasyncioserver
 
-.. image:: https://pypip.in/d/thriftasyncioserver/badge.png
+.. image:: https://pypip.in/download/thriftasyncioserver/badge.png
         :target: https://pypi.python.org/pypi/thriftasyncioserver
 
 
