@@ -55,13 +55,16 @@ class Server(object):
     def make_protocol(self):
         return Protocol(self.protocol_factory, self.processor)
 
-    def serve(self):
-        loop = asyncio.get_event_loop()
-
-        coro = loop.create_server(self.make_protocol,
+    def make_server(self):
+        return loop.create_server(self.make_protocol,
                                   host=self.host,
                                   port=self.port,
                                   ssl=self.ssl)
+
+    def serve(self):
+        loop = asyncio.get_event_loop()
+
+        coro = self.make_server()
 
         server = loop.run_until_complete(coro)
         if self.server_ready_event:
@@ -77,3 +80,16 @@ class Server(object):
             loop.run_until_complete(server.wait_closed())
             if self.server_stop_event:
                 self.server_stop_event.set()
+
+
+class SocketServer(Server):
+    def __init__(self, path, protocol_factory, processor, ssl=None):
+        self.path = path
+        self.protocol_factory = protocol_factory
+        self.processor = processor
+        self.ssl = ssl
+
+    def make_server(self):
+        return loop.create_unix_server(self.make_protocol,
+                                       path,
+                                       ssl=self.ssl)
