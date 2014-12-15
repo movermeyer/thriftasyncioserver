@@ -109,6 +109,13 @@ class BasicTests(unittest.TestCase):
         self.assertEqual(self.client.greet('hello'), 'hello world')
         self.handler.greet.assert_called_with('hello')
 
+    def test_greet_twice(self):
+        self.handler.greet.return_value = 'hello world'
+        self.assertEqual(self.client.greet('hello'), 'hello world')
+        self.handler.greet.assert_called_with('hello')
+        self.assertEqual(self.client.greet('second_time'), 'hello world')
+        self.handler.greet.assert_called_with('second_time')
+
 
 class SSLTests(BasicTests):
 
