@@ -8,10 +8,10 @@ ThriftAsyncIOServer
 .. image:: https://travis-ci.org/Marketcircle/thriftasyncioserver.png?branch=master
         :target: https://travis-ci.org/Marketcircle/thriftasyncioserver
 
-.. image:: https://pypip.in/download/thriftasyncioserver/badge.png
+.. image:: https://img.shields.io/pypi/dm/thriftasyncioserver.svg
         :target: https://pypi.python.org/pypi/thriftasyncioserver
         
-.. image:: https://pypip.in/format/thriftasyncioserver/badge.png
+.. image:: https://img.shields.io/pypi/format/thriftasyncioserver.svg
         :target: https://pypi.python.org/pypi/thriftasyncioserver
         
 Thrift Server using the Python 3 asyncio module
